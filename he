@@ -4,11 +4,12 @@ ENV PATH=${PATH}:${JDK_HOME}/bin
 
 RUN mkdir -p /u01/lib/
 WORKDIR /u01/lib/
-
-ADD https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz .
-RUN gunzip openjdk-11+28_linux-x64_bin.tar.gz
-RUN tar -xvf openjdk-11+28_linux-x64_bin.tar.gz
-RUN rm -rf openjdk-11+28_linux-x64_bin.tar.gz
+RUN apt update -y 
+RUN apt install -y CURL
+RUN CURL https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz --output ./u01/lib/openjdk-11+28_linux-x64_bin.tar.gz
+RUN gunzip ./u01/lib/openjdk-11+28_linux-x64_bin.tar.gz
+RUN tar -xvf ./u01/lib/openjdk-11+28_linux-x64_bin.tar.gz
+RUN rm -rf ./u01/lib/openjdk-11+28_linux-x64_bin.tar.gz
 
 COPY target/covido-0.0.1-SNAPSHOT.war   .
 RUN chmod u+x covido-0.0.1-SNAPSHOT.war
